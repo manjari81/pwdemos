@@ -1,0 +1,51 @@
+test("Read data from all the table pages", async ({page}) => {
+
+await page.goto("https://datatables.net/examples/basic_init/zero_configuration.html");
+
+let hasmorepages:boolean=true;   // to check pages are present or not and then rows are present or not.- last page in the table is not known
+
+/* 
+// read first page 
+
+const rows = await page.locator("#example tbody tr").all();  // array of locators
+
+for( let row of rows)
+{
+   console.log(await row.innerText());  // printing all the rows from the particular page
+}
+ */
+
+
+while(hasmorepages)
+{
+ const rows = await page.locator("#example tbody tr").all();  // array of locators
+
+ for(let row of rows)
+ {
+    console.log(await row.innerText());  // printing all the rows from the particular page
+ }
+
+
+// button[aria-label='Next']
+// button[aria-controls='example']:has-text("›")  - judo element "›"
+// button[aria-controls='example']:nth-child(9)
+
+
+const nextButton:Locator = page.locator("button[aria-label='Next']");
+
+//values of class -  dt-paging-button disabled next and dt-paging-button next
+
+const isDisabled = await nextButton.getAttribute('class');  // dt-paging-button disabled next
+
+if(isDisabled?.includes('disabled))
+{
+  hasmorepages =false;
+}
+else
+{
+await nextButton.click();
+}
+
+}
+
+}) ;

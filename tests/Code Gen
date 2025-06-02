@@ -1,0 +1,138 @@
+npx playwright codegen - open the codegen window
+
+
+https://demoblaze.com/index.html
+
+Test File creation
+npx playwright codegen -o tests/codegentest.spec.ts --headed 
+             or
+npx playwright codegen --output tests/codegentest.spec.ts --headed 
+
+Device
+npx playwright codegen --output tests/codegentest.spec.ts --device "iPhone 11"
+
+Browser
+npx playwright codegen -output tests/codegentest.spec.ts -b firefox
+            or
+npx playwright codegen --output tests/codegentest.spec.ts --browser firefox
+
+
+Viewport
+npx playwright codegen --output tests/codegentest.spec.ts --viewport-size "1280,720"
+
+Run Debug Mode
+npx playwright test codegentest_ver1.spec.ts --headed --debug
+
+
+trace
+'off': Do not record trace.
+'on': Record trace for each test.
+'on-first-retry': Record trace only when retrying a test for the first time.
+'on-all-retries': Record trace only when retrying a test.
+'retain-on-failure': Record trace for each test. When test run passes, remove the recorded trace.
+'retain-on-first-failure': Record trace for the first run of each test, but not for retries. When test run passes, remove the recorded trace.
+
+trace for only test
+npx playwright test tracing.spec.ts --headed --trace on
+
+all the test will be run and trace will be captured
+npx playwright test --headed --trace on  
+
+user defined trace files using context
+npx playwright show-trace trace.zip
+https://trace.playwright.dev/
+
+test specific retries
+npx playwright test flakytest.spec.ts --headed --retries=3
+
+trace on all retries
+npx playwright test flakytest.spec.ts --headed --retries=3 --trace on-all-retries
+
+execute particular group 
+npx playwright test grouping.spec.ts --grep Group1
+
+execute sanity test
+npx playwright test tagging.spec.ts --headed --grep "@sanity"
+
+execute regression test
+npx playwright test tagging.spec.ts --headed --grep "@regression 
+
+execute all the test belong to sanity and regression
+npx playwright test tagging.spec.ts --headed --grep "(?=.*@sanity)(?=.*@regression)" 
+
+execute sanity or regression
+npx playwright test tagging.spec.ts --headed --grep "@sanity|@regression"
+
+execute sanity which doesnot belong to sanity but not regression
+npx playwright test tagging.spec.ts --headed --grep "@sanity" --grep-invert "@regression"
+
+Config file property
+
+  // grep: /@sanity/,  // specifying tag - run only sanity test
+
+  // grep:/(?=.*@sanity)(?=.*@regression)/  run sanity and regression
+
+  // grepInvert:/@regression/
+
+  
+  npx playwright test paralleltesting.spec.ts --headed --project firefox 
+  
+  workers
+  npx playwright test paralleltesting.spec.ts --headed --workers 4    
+
+// reading data from json
+const jsonPath = "testdata/data.json" ;
+const loginData:any  =JSON.parse(fs.readFileSync(jsonPath,'utf-8')); // return the lgoin data from j-son file in the array format
+
+//csv parser
+npm install csv-parse
+
+// read data from csv files
+import{test,expect} from "@playwright/test" ;
+import fs from 'fs' ;  // built in module in js/ts
+import {parse} from 'csv-parse/sync';
+
+const csvPath = "testdata/data.csv" ;
+const fileContent = fs.readFileSync(csvPath,'utf-8'); // read content from the csv file 
+
+const records = parse(fileContent,{columns:true,skip_empty_lines:true}) 
+
+
+// xls package
+npm install xlsx
+
+
+// reports
+reporter: [ ['html', {open: 'always'}] ] ,
+reporter: [ ['html', {open: 'always', 'outputFolder': 'html-reports'}]] 
+
+Through command prompt
+npx playwright test paralleltesting.spec.ts --headed --reporter=html 
+
+See Reports
+npx playwright show-report html-reports
+
+//Allure Report
+npm install -D allure-playwright
+npx playwright test --reporter=allure-playwright
+
+// Allure Report Generation
+npm install -g allure-commandline
+allure --version
+
+Path
+C:\Users\ishaa\AppData\Roaming\npm\node_modules\allure-commandline\bin
+
+
+Generate Reports
+allure generate ./allure-results -o ./allure-report
+allure generate ./allure-results -o ./allure-report --clean
+allure open ./allure-report
+
+
+// command through terminal.
+ npx playwright test reporters.spec.ts --headed --project=chromium --workers=2 --fully-parallel
+
+ // package.json
+ "mytest1": "npx playwright test reporters.spec.ts --headed --project=chromium --workers=2 --fully-parallel",
+ npm run mytest1 // terminal
