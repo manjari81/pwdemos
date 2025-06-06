@@ -34,7 +34,7 @@ export default defineConfig({
   // retries: process.env.CI ? 2 : 0,
 
    // Retry locally 
-  // retries: 3,   // done by M.B.
+  retries: 1,   // done by M.B.
 
   /* Opt out of parallel tests on CI. */
   // workers: process.env.CI ? 1 : undefined,
@@ -78,7 +78,7 @@ export default defineConfig({
 
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
-    baseURL: 'https://restful-booker.herokuapp.com', // use only for API testing
+    baseURL: 'https://restful-booker.herokuapp.com', // use only for API testing - M.B.
 
     // viewport: { width: 1280, height: 720 },
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */

@@ -1,7 +1,7 @@
 /*
 Test: create booking
 Request type: Post
-Request body: static
+Request body: static - hard coded
 
 Add url to playwright.config.ts file
 	baseURL: 'https://restful-booker.herokuapp.com'
@@ -13,7 +13,7 @@ import { test, expect } from "@playwright/test"
 
 test("Create Post request using static body", async({ request }) => {
 
-    //request body
+    //request body in Json Format - Input for the request
     const requestBody = {
         firstname: "Jim",
         lastname: "Brown",
@@ -27,10 +27,10 @@ test("Create Post request using static body", async({ request }) => {
     }
 
     // send post request
-
+    
     const response=await request.post("/booking",{data:requestBody});
 
-    const responseBody=await response.json();  // Extracted response
+    const responseBody=await response.json();  // Extracted only body from response
     console.log(responseBody);
     
     //validate status
@@ -43,7 +43,7 @@ test("Create Post request using static body", async({ request }) => {
     expect(responseBody).toHaveProperty("booking.additionalneeds")
 
     //validate booking details
-    const booking=responseBody.booking;
+    const booking=responseBody.booking;  // json path 
 
 
     expect(booking).toMatchObject({

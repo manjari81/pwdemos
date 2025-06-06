@@ -1,7 +1,7 @@
 /*
 Test: create booking
 Request type: Post
-Request body: randome/dynamic data(faker)
+Request body: random/dynamic data(faker)
 
 Pre-requistes: 
 ----------------
@@ -24,7 +24,7 @@ import {DateTime} from 'luxon';
 
 
 
-test("Create Post request using Faker", async({ request }) => {
+test("Create Post request using Faker Library ", async({ request }) => {
 
     //data generation using faker
     const firstname=faker.person.firstName();
@@ -51,7 +51,7 @@ test("Create Post request using Faker", async({ request }) => {
         additionalneeds: additionalneeds,
     }
 
-    
+  
     // send post request
 
     const response=await request.post("/booking",{data:requestBody});
